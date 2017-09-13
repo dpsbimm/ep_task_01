@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <h1>Checkout</h1>
+            <form action="{{ path('checkout_get') }}" method="post">
+                <div class="group">
+                    <h2>Payment for</h2>
+                    <div><label for="currency">Currency: </label><input id="currency" type="text" name="currency" value="EUR" readonly="readonly" disabled="disabled" /></div>
+                    <div><label for="amount">Amount: </label><input id="amount" type="text" name="amount" value="20.00" readonly="readonly" disabled="disabled" /></div>
+                </div>
+                <div class="group">
+                    <h2>Customer information</h2>
+                    <div><label for="payer_first_name">Payer - first name: </label><input id="payer_first_name" type="text" name="payer_first_name" value="" /></div>
+                    <div><label for="payer_last_name">Payer - last name: </label><input id="payer_last_name" type="text" name="payer_last_name" value="" /></div>
+                </div>
+                <div class="group">
+                    <h2>Credit card details</h2>
+                    <div><label for="creditcard_number">Number: </label><input id="creditcard_number" type="text" name="creditcard_number" value="" /></div>
+                    <div><label for="creditcard_cvv">CVV: </label><input id="creditcard_cvv" type="text" name="creditcard_cvv" value="" /></div>
+                    <div>
+                        <label for="creditcard_expiration_month">Expiration date (MM/YYYY): </label>
+                        <input id="creditcard_expiration_month" type="text" name="creditcard_expiration_month" value="" maxlength="2" /> /
+                        <input id="creditcard_expiration_year" type="text" name="creditcard_expiration_year" value="" maxlength="4" />
+                    </div>
+                </div>
+                <div><button type="submit">Pay</button></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
