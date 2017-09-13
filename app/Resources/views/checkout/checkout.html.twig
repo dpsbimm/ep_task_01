@@ -7,8 +7,16 @@
             <form action="{{ path('checkout_get') }}" method="post">
                 <div class="group">
                     <h2>Payment for</h2>
-                    <div><label for="currency">Currency: </label><input id="currency" type="text" name="currency" value="EUR" readonly="readonly" disabled="disabled" /></div>
-                    <div><label for="amount">Amount: </label><input id="amount" type="text" name="amount" value="20.00" readonly="readonly" disabled="disabled" /></div>
+                    <div>
+                        <label for="currency">Currency: </label>
+                        <input id="currency" type="text" value="EUR" readonly="readonly" disabled="disabled" />
+                        <input type="hidden" name="currency" value="EUR" />
+                    </div>
+                    <div>
+                        <label for="amount">Amount: </label>
+                        <input id="amount" type="text" value="20.00" readonly="readonly" disabled="disabled" />
+                        <input type="hidden" name="amount" value="20.00" />
+                    </div>
                 </div>
                 <div class="group">
                     <h2>Customer information</h2>
