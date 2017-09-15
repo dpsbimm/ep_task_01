@@ -18,11 +18,11 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
+    remote_api.payment_url: '%env(REMOTE_API_PAYMENT_URL)%'
     # Remote payment API URL
     # invalid JSON
-    #remote_payment_api_url: 'https://pastebin.com/raw/LrCS4j0c'
+    #env(REMOTE_API_PAYMENT_URL): 'https://pastebin.com/raw/LrCS4j0c'
     # result = OK
-    #remote_payment_api_url: 'https://pastebin.com/raw/288PX9T6'
+    env(REMOTE_API_PAYMENT_URL): 'https://pastebin.com/raw/288PX9T6'
     # result = DECLINE (Amount exceed)
-    #remote_payment_api_url: 'https://pastebin.com/raw/1fpTv46q'
-    remote_payment_api_url: 'https://pastebin.com/raw/288PX9T6'
+    #env(REMOTE_API_PAYMENT_URL): 'https://pastebin.com/raw/1fpTv46q'
