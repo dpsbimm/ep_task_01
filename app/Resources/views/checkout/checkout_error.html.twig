@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <h1>Checkout Error</h1>
+            <p>An error occurred during the checkout process.</p>
+            {% if (errorMessage is defined) and (errorMessage is not empty) %}
+              <p class="error"><em>{{ errorMessage }}</em></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
