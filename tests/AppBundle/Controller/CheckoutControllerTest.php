@@ -228,14 +228,14 @@ class CheckoutControllerTest extends WebTestCase
     {
         return [
             'invalid JSON' => [
-                'dev.invalidjs',
+                'test.invalidjs',
                 $this->getValidInputDataSet(),
                 'Checkout Error',
                 function () {
                 },
             ],
             'result = OK' => [
-                'dev.ok',
+                'test.ok',
                 $this->getValidInputDataSet(),
                 'Checkout Successful',
                 function (Crawler $crawler) {
@@ -246,7 +246,7 @@ class CheckoutControllerTest extends WebTestCase
                 },
             ],
             'result = DECLINE' => [
-                'dev.decline.amount_exceeded',
+                'test.decline.amount_exceeded',
                 $this->getValidInputDataSet(),
                 'Checkout Error',
                 function (Crawler $crawler) {

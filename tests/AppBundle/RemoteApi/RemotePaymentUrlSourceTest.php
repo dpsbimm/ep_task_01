@@ -20,9 +20,9 @@ class RemotePaymentUrlSourceTest extends TestCase
     {
         $this->source = new RemotePaymentUrlSource([
             'production'                  => 'http://localhost/payment/api/production',
-            'dev.invalidjs'               => 'http://localhost/payment/api/dev/invalid-js',
-            'dev.ok'                      => 'http://localhost/payment/api/dev/ok',
-            'dev.decline.amount_exceeded' => 'http://localhost/payment/api/dev/decline/amount-exceeded',
+            'test.invalidjs'               => 'http://localhost/payment/api/dev/invalid-js',
+            'test.ok'                      => 'http://localhost/payment/api/dev/ok',
+            'test.decline.amount_exceeded' => 'http://localhost/payment/api/dev/decline/amount-exceeded',
         ]);
     }
 
@@ -64,16 +64,16 @@ class RemotePaymentUrlSourceTest extends TestCase
                 'production',
                 'http://localhost/payment/api/production',
             ],
-            'dev.invalidjs' => [
-                'dev.invalidjs',
+            'test.invalidjs' => [
+                'test.invalidjs',
                 'http://localhost/payment/api/dev/invalid-js',
             ],
-            'dev.ok' => [
-                'dev.ok',
+            'test.ok' => [
+                'test.ok',
                 'http://localhost/payment/api/dev/ok',
             ],
-            'dev.decline.amount_exceeded' => [
-                'dev.decline.amount_exceeded',
+            'test.decline.amount_exceeded' => [
+                'test.decline.amount_exceeded',
                 'http://localhost/payment/api/dev/decline/amount-exceeded',
             ],
         ];
