@@ -18,7 +18,12 @@ class RemotePaymentUrlSourceTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->source = new RemotePaymentUrlSource();
+        $this->source = new RemotePaymentUrlSource([
+            'production'                  => 'http://localhost/payment/api/production',
+            'dev.invalidjs'               => 'http://localhost/payment/api/dev/invalid-js',
+            'dev.ok'                      => 'http://localhost/payment/api/dev/ok',
+            'dev.decline.amount_exceeded' => 'http://localhost/payment/api/dev/decline/amount-exceeded',
+        ]);
     }
 
     /**
@@ -31,7 +36,7 @@ class RemotePaymentUrlSourceTest extends TestCase
 
     public function testConstructorSuccess(): void
     {
-        $this->assertSame('https://pastebin.com/raw/288PX9T6', $this->source->getUrl());
+        $this->assertSame('http://localhost/payment/api/production', $this->source->getUrl());
     }
 
     /**
@@ -57,19 +62,19 @@ class RemotePaymentUrlSourceTest extends TestCase
         return [
             'production' => [
                 'production',
-                'https://pastebin.com/raw/288PX9T6',
+                'http://localhost/payment/api/production',
             ],
             'dev.invalidjs' => [
                 'dev.invalidjs',
-                'https://pastebin.com/raw/LrCS4j0c',
+                'http://localhost/payment/api/dev/invalid-js',
             ],
             'dev.ok' => [
                 'dev.ok',
-                'https://pastebin.com/raw/288PX9T6',
+                'http://localhost/payment/api/dev/ok',
             ],
             'dev.decline.amount_exceeded' => [
                 'dev.decline.amount_exceeded',
-                'https://pastebin.com/raw/1fpTv46q',
+                'http://localhost/payment/api/dev/decline/amount-exceeded',
             ],
         ];
     }

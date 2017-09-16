@@ -14,7 +14,7 @@ interface RemotePaymentUrlSourceInterface
     /**
      * Set active URL by configuration key.
      *
-     * @param string $configKey
+     * @param string $urlKey
      */
-    public function setUrl(string $configKey): void;
+    public function setUrl(string $urlKey): void;
 }

@@ -6,16 +6,13 @@ use AppBundle\Exception\InvalidArgumentException;
 
 class RemotePaymentUrlSource implements RemotePaymentUrlSourceInterface
 {
-    const DEFAULT_CONFIGURATION_KEY = 'production';
+    const DEFAULT_URL_KEY = 'production';
 
     /**
      * @var array
      */
-    private $configs = [
-        'production'                  => 'https://pastebin.com/raw/288PX9T6',
-        'dev.invalidjs'               => 'https://pastebin.com/raw/LrCS4j0c',
-        'dev.ok'                      => 'https://pastebin.com/raw/288PX9T6',
-        'dev.decline.amount_exceeded' => 'https://pastebin.com/raw/1fpTv46q',
+    private $urlMap = [
+        self::DEFAULT_URL_KEY => '',
     ];
 
     /**
@@ -25,10 +22,14 @@ class RemotePaymentUrlSource implements RemotePaymentUrlSourceInterface
 
     /**
      * Constructor.
+     *
+     * @param array $urls
      */
-    public function __construct()
+    public function __construct(array $urls)
     {
-        $this->setUrl(self::DEFAULT_CONFIGURATION_KEY);
+        $this->urlMap = $urls;
+
+        $this->setUrl(self::DEFAULT_URL_KEY);
     }
 
     /**
@@ -42,18 +43,18 @@ class RemotePaymentUrlSource implements RemotePaymentUrlSourceInterface
     }
 
     /**
-     * Set URL by configuration key.
+     * Set URL by key.
      *
-     * @param string $configKey
+     * @param string $urlKey
      *
      * @throws InvalidArgumentException
      */
-    public function setUrl(string $configKey): void
+    public function setUrl(string $urlKey): void
     {
-        if (!array_key_exists($configKey, $this->configs)) {
-            throw new InvalidArgumentException('Invalid configuration key');
+        if (!array_key_exists($urlKey, $this->urlMap)) {
+            throw new InvalidArgumentException('Invalid URL key');
         }
 
-        $this->activeUrl = $this->configs[$configKey];
+        $this->activeUrl = $this->urlMap[$urlKey];
     }
 }

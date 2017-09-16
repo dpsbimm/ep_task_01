@@ -167,7 +167,9 @@ class RemotePaymentProcessorTest extends TestCase
      */
     private function createRemotePaymentUrlSourceMock(): \PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder(RemotePaymentUrlSource::class)->getMock();
+        return $this->getMockBuilder(RemotePaymentUrlSource::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
