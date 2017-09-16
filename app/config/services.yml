@@ -40,5 +40,9 @@ services:
     AppBundle\RemoteApi\RemotePaymentProcessorInterface:
         alias: AppBundle\RemoteApi\RemotePaymentProcessor
 
+    AppBundle\RemoteApi\RemotePaymentUrlSourceInterface:
+        alias: AppBundle\RemoteApi\RemotePaymentUrlSource
+        public: true
+
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
