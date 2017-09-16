@@ -23,7 +23,7 @@ class PaymentTest extends TestCase
     /**
      * PHPUnit: setUp.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->payment = new Payment(
             123456,
@@ -40,7 +40,7 @@ class PaymentTest extends TestCase
     /**
      * PHPUnit: tearDown.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->payment = null;
     }
@@ -50,7 +50,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidAmountData
      */
-    public function testGetSetAmountExceptionInvalidAmount(int $amount)
+    public function testGetSetAmountExceptionInvalidAmount(int $amount): void
     {
         $this->expectException(InvalidPaymentAmountException::class);
 
@@ -62,7 +62,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidAmountData()
+    public function provideInvalidAmountData(): array
     {
         return [
             '0' => [
@@ -79,7 +79,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidAmountData
      */
-    public function testGetSetAmountSuccess(int $amount)
+    public function testGetSetAmountSuccess(int $amount): void
     {
         $this->assertNotSame($amount, $this->payment->getAmount());
 
@@ -93,7 +93,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidAmountData()
+    public function provideValidAmountData(): array
     {
         return [
             'small amount' => [
@@ -113,7 +113,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidCvvData
      */
-    public function testGetSetCreditCardCvvExceptionInvalidCvv(string $cvv)
+    public function testGetSetCreditCardCvvExceptionInvalidCvv(string $cvv): void
     {
         $this->expectException(InvalidCreditCardCvvException::class);
 
@@ -125,7 +125,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidCvvData()
+    public function provideInvalidCvvData(): array
     {
         return [
             'not numeric' => [
@@ -145,7 +145,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidCvvData
      */
-    public function testGetSetCreditCardCvvSuccess(string $cvv)
+    public function testGetSetCreditCardCvvSuccess(string $cvv): void
     {
         $this->assertNotSame($cvv, $this->payment->getCreditCardCvv());
 
@@ -159,7 +159,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidCvvData()
+    public function provideValidCvvData(): array
     {
         return [
             '3 digits' => [
@@ -176,7 +176,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidCreditCardExpirationMonthData
      */
-    public function testGetSetCreditCardExpirationMonthExceptionInvalidMonth(int $month)
+    public function testGetSetCreditCardExpirationMonthExceptionInvalidMonth(int $month): void
     {
         $this->expectException(InvalidCreditCardExpirationMonthException::class);
 
@@ -188,7 +188,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidCreditCardExpirationMonthData()
+    public function provideInvalidCreditCardExpirationMonthData(): array
     {
         return [
             '0' => [
@@ -208,7 +208,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidCreditCardExpirationMonthData
      */
-    public function testGetSetCreditCardExpirationMonthSuccess(int $month)
+    public function testGetSetCreditCardExpirationMonthSuccess(int $month): void
     {
         $this->assertNotSame($month, $this->payment->getCreditCardExpirationMonth());
 
@@ -222,7 +222,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidCreditCardExpirationMonthData()
+    public function provideValidCreditCardExpirationMonthData(): array
     {
         return [
             'January' => [
@@ -242,7 +242,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidCreditCardExpirationYearData
      */
-    public function testGetSetCreditCardExpirationYearExceptionInvalidYear(int $year)
+    public function testGetSetCreditCardExpirationYearExceptionInvalidYear(int $year): void
     {
         $this->expectException(InvalidCreditCardExpirationYearException::class);
 
@@ -254,7 +254,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidCreditCardExpirationYearData()
+    public function provideInvalidCreditCardExpirationYearData(): array
     {
         return [
             '1900' => [
@@ -271,7 +271,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidCreditCardExpirationYearData
      */
-    public function testGetSetCreditCardExpirationYearSuccess(int $year)
+    public function testGetSetCreditCardExpirationYearSuccess(int $year): void
     {
         $this->assertNotSame($year, $this->payment->getCreditCardExpirationYear());
 
@@ -285,7 +285,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidCreditCardExpirationYearData()
+    public function provideValidCreditCardExpirationYearData(): array
     {
         return [
             'current year' => [
@@ -305,7 +305,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidCreditCardNumberData
      */
-    public function testGetSetCreditCardNumberExceptionInvalidNumber(string $creditCardNumber)
+    public function testGetSetCreditCardNumberExceptionInvalidNumber(string $creditCardNumber): void
     {
         $this->expectException(InvalidCreditCardNumberException::class);
 
@@ -317,7 +317,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidCreditCardNumberData()
+    public function provideInvalidCreditCardNumberData(): array
     {
         return [
             'empty' => [
@@ -340,7 +340,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidCreditCardNumberData
      */
-    public function testGetSetCreditCardNumberSuccess(string $creditCardNumber)
+    public function testGetSetCreditCardNumberSuccess(string $creditCardNumber): void
     {
         $this->assertNotSame($creditCardNumber, $this->payment->getCreditCardNumber());
 
@@ -354,7 +354,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidCreditCardNumberData()
+    public function provideValidCreditCardNumberData(): array
     {
         return [
             'VISA' => [
@@ -401,7 +401,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideInvalidCurrencyData
      */
-    public function testGetSetCurrencyExceptionInvalidCurrency(string $currency)
+    public function testGetSetCurrencyExceptionInvalidCurrency(string $currency): void
     {
         $this->expectException(InvalidCurrencyException::class);
 
@@ -413,7 +413,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidCurrencyData()
+    public function provideInvalidCurrencyData(): array
     {
         return [
             'empty' => [
@@ -436,7 +436,7 @@ class PaymentTest extends TestCase
      *
      * @dataProvider provideValidCurrencyData
      */
-    public function testGetSetCurrencySuccess(string $currency)
+    public function testGetSetCurrencySuccess(string $currency): void
     {
         $this->assertNotSame($currency, $this->payment->getCurrency());
 
@@ -450,7 +450,7 @@ class PaymentTest extends TestCase
      *
      * @return array
      */
-    public function provideValidCurrencyData()
+    public function provideValidCurrencyData(): array
     {
         return [
             'EUR' => [
@@ -462,14 +462,14 @@ class PaymentTest extends TestCase
         ];
     }
 
-    public function testGetSetPayerFirstNameExceptionEmpty()
+    public function testGetSetPayerFirstNameExceptionEmpty(): void
     {
         $this->expectException(EmptyFirstNameException::class);
 
         $this->payment->setPayerFirstName('');
     }
 
-    public function testGetSetPayerFirstNameSuccess()
+    public function testGetSetPayerFirstNameSuccess(): void
     {
         $firstName = 'not empty';
 
@@ -480,14 +480,14 @@ class PaymentTest extends TestCase
         $this->assertSame($firstName, $this->payment->getPayerFirstName());
     }
 
-    public function testGetSetPayerLastNameExceptionEmpty()
+    public function testGetSetPayerLastNameExceptionEmpty(): void
     {
         $this->expectException(EmptyLastNameException::class);
 
         $this->payment->setPayerLastName('');
     }
 
-    public function testGetSetPayerLastNameSuccess()
+    public function testGetSetPayerLastNameSuccess(): void
     {
         $lastName = 'not empty';
 

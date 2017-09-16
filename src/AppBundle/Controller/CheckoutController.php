@@ -20,7 +20,7 @@ class CheckoutController extends Controller
      *
      * @return Response
      */
-    public function checkoutGetAction()
+    public function checkoutGetAction(): Response
     {
         return $this->render('checkout/checkout.html.twig');
     }
@@ -34,8 +34,10 @@ class CheckoutController extends Controller
      *
      * @return Response
      */
-    public function checkoutPostAction(Request $request, RemotePaymentProcessorInterface $remotePaymentProcessor)
-    {
+    public function checkoutPostAction(
+        Request $request,
+        RemotePaymentProcessorInterface $remotePaymentProcessor
+    ): Response {
         $amount = (int) floor((float) $request->request->get('amount') * 100);
 
         try {

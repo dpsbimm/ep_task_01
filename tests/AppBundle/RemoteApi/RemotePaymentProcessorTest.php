@@ -32,7 +32,7 @@ class RemotePaymentProcessorTest extends TestCase
     /**
      * PHPUnit: setUp.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = $this->createClientInterfaceMock();
         $this->urlSource = $this->createRemotePaymentUrlSourceMock();
@@ -43,14 +43,14 @@ class RemotePaymentProcessorTest extends TestCase
     /**
      * PHPUnit: tearDown.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->processor = null;
         $this->urlSource = null;
         $this->client = null;
     }
 
-    public function testSendPaymentRequestExceptionUnexpectedResponseStatus()
+    public function testSendPaymentRequestExceptionUnexpectedResponseStatus(): void
     {
         $this->expectException(UnexpectedResponseStatusException::class);
 
@@ -70,7 +70,7 @@ class RemotePaymentProcessorTest extends TestCase
      *
      * @dataProvider provideInvalidResponseBodyData
      */
-    public function testSendPaymentRequestExceptionInvalidResponse(string $responseBody)
+    public function testSendPaymentRequestExceptionInvalidResponse(string $responseBody): void
     {
         $this->expectException(InvalidResponseException::class);
 
@@ -90,7 +90,7 @@ class RemotePaymentProcessorTest extends TestCase
      *
      * @return array
      */
-    public function provideInvalidResponseBodyData()
+    public function provideInvalidResponseBodyData(): array
     {
         return [
             'not JSON' => [
@@ -110,7 +110,7 @@ class RemotePaymentProcessorTest extends TestCase
      *
      * @dataProvider provideValidResponseBodyData
      */
-    public function testSendPaymentRequestSuccess(array $responseData)
+    public function testSendPaymentRequestSuccess(array $responseData): void
     {
         $payment = $this->generateExamplePayment();
         $apiUrl = 'http://localhost/payment/api/';
@@ -130,7 +130,7 @@ class RemotePaymentProcessorTest extends TestCase
      *
      * @return array
      */
-    public function provideValidResponseBodyData()
+    public function provideValidResponseBodyData(): array
     {
         return [
             'response = OK' => [
@@ -165,7 +165,7 @@ class RemotePaymentProcessorTest extends TestCase
      *
      * @return RemotePaymentUrlSource|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createRemotePaymentUrlSourceMock()
+    private function createRemotePaymentUrlSourceMock(): \PHPUnit_Framework_MockObject_MockObject
     {
         return $this->getMockBuilder(RemotePaymentUrlSource::class)->getMock();
     }

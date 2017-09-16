@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CheckoutControllerTest extends WebTestCase
 {
-    public function testCheckoutGetActionSuccess()
+    public function testCheckoutGetActionSuccess(): void
     {
         $client = static::createClient();
 
@@ -24,7 +24,7 @@ class CheckoutControllerTest extends WebTestCase
      *
      * @dataProvider provideInvalidInputData
      */
-    public function testCheckoutPostActionSuccessErrorInvalidInputData(array $postValues, string $expErrorMessage)
+    public function testCheckoutPostActionSuccessErrorInvalidInputData(array $postValues, string $expErrorMessage): void
     {
         $client = static::createClient();
 
@@ -40,7 +40,7 @@ class CheckoutControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideInvalidInputData()
+    public function provideInvalidInputData(): array
     {
         $baseDataSet = [
             $this->getValidInputDataSet(),
@@ -205,7 +205,7 @@ class CheckoutControllerTest extends WebTestCase
         array $postValues,
         string $expTitle,
         callable $crawlerAssertions
-    ) {
+    ): void {
         $client = self::createClient();
 
         $urlSource = $client->getContainer()->get(RemotePaymentUrlSourceInterface::class);
@@ -224,7 +224,7 @@ class CheckoutControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideCheckoutPostData()
+    public function provideCheckoutPostData(): array
     {
         return [
             'invalid JSON' => [

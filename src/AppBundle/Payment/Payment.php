@@ -102,7 +102,7 @@ class Payment
      *
      * @throws \AppBundle\Exception\Payment\InvalidPaymentAmountException
      */
-    public function setAmount(int $amount)
+    public function setAmount(int $amount): void
     {
         if ($amount <= 0) {
             throw new InvalidPaymentAmountException($amount);
@@ -128,7 +128,7 @@ class Payment
      *
      * @throws \AppBundle\Exception\Payment\InvalidCreditCardCvvException
      */
-    public function setCreditCardCvv(string $creditCardCvv)
+    public function setCreditCardCvv(string $creditCardCvv): void
     {
         if (!preg_match('#^\\d{3,4}$#', $creditCardCvv)) {
             throw new InvalidCreditCardCvvException($creditCardCvv);
@@ -154,7 +154,7 @@ class Payment
      *
      * @throws \AppBundle\Exception\Payment\InvalidCreditCardExpirationMonthException
      */
-    public function setCreditCardExpirationMonth(int $creditCardExpirationMonth)
+    public function setCreditCardExpirationMonth(int $creditCardExpirationMonth): void
     {
         if (($creditCardExpirationMonth < 1) || ($creditCardExpirationMonth > 12)) {
             throw new InvalidCreditCardExpirationMonthException($creditCardExpirationMonth);
@@ -180,7 +180,7 @@ class Payment
      *
      * @throws InvalidCreditCardExpirationYearException
      */
-    public function setCreditCardExpirationYear(int $creditCardExpirationYear)
+    public function setCreditCardExpirationYear(int $creditCardExpirationYear): void
     {
         if ($creditCardExpirationYear < date('Y')) {
             throw new InvalidCreditCardExpirationYearException($creditCardExpirationYear);
@@ -206,7 +206,7 @@ class Payment
      *
      * @throws \AppBundle\Exception\Payment\InvalidCreditCardNumberException
      */
-    public function setCreditCardNumber(string $creditCardNumber)
+    public function setCreditCardNumber(string $creditCardNumber): void
     {
         if (!preg_match('#^\\d{13,19}$#', $creditCardNumber)) {
             throw new InvalidCreditCardNumberException($creditCardNumber);
@@ -232,7 +232,7 @@ class Payment
      *
      * @throws \AppBundle\Exception\Payment\InvalidCurrencyException
      */
-    public function setCurrency(string $currency)
+    public function setCurrency(string $currency): void
     {
         if (($currency !== mb_strtoupper($currency)) || (3 !== mb_strlen($currency))) {
             throw new InvalidCurrencyException($currency);
@@ -258,7 +258,7 @@ class Payment
      *
      * @throws EmptyFirstNameException
      */
-    public function setPayerFirstName(string $payerFirstName)
+    public function setPayerFirstName(string $payerFirstName): void
     {
         if (0 === mb_strlen($payerFirstName)) {
             throw new EmptyFirstNameException();
@@ -284,7 +284,7 @@ class Payment
      *
      * @throws EmptyLastNameException
      */
-    public function setPayerLastName(string $payerLastName)
+    public function setPayerLastName(string $payerLastName): void
     {
         if (0 === mb_strlen($payerLastName)) {
             throw new EmptyLastNameException();
