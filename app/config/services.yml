@@ -39,11 +39,7 @@ services:
 
     AppBundle\RemoteApi\RemotePaymentUrlSource:
         class: AppBundle\RemoteApi\RemotePaymentUrlSource
-        arguments:
-            -   production:                  'https://pastebin.com/raw/288PX9T6'
-                dev.invalidjs:               'https://pastebin.com/raw/LrCS4j0c'
-                dev.ok:                      'https://pastebin.com/raw/288PX9T6'
-                dev.decline.amount_exceeded: 'https://pastebin.com/raw/1fpTv46q'
+        arguments: ['%remote_api.payment.urls%']
 
     AppBundle\RemoteApi\RemotePaymentUrlSourceInterface:
         alias: AppBundle\RemoteApi\RemotePaymentUrlSource

@@ -17,3 +17,11 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # Remote API - Payment - URL mapping
+    # The ones prefixed with "dev." are used in functional tests.
+    remote_api.payment.urls:
+        production:                  'https://pastebin.com/raw/288PX9T6'
+        dev.invalidjs:               'https://pastebin.com/raw/LrCS4j0c'
+        dev.ok:                      'https://pastebin.com/raw/288PX9T6'
+        dev.decline.amount_exceeded: 'https://pastebin.com/raw/1fpTv46q'
