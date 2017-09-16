@@ -34,9 +34,6 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-    AppBundle\RemoteApi\RemotePaymentProcessor:
-        arguments: ['@GuzzleHttp\ClientInterface', '%remote_api.payment_url%']
-
     AppBundle\RemoteApi\RemotePaymentProcessorInterface:
         alias: AppBundle\RemoteApi\RemotePaymentProcessor
 

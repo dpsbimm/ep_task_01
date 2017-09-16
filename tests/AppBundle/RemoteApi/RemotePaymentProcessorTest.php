@@ -6,6 +6,8 @@ use AppBundle\Exception\RemoteApi\InvalidResponseException;
 use AppBundle\Exception\RemoteApi\UnexpectedResponseStatusException;
 use AppBundle\Payment\Payment;
 use AppBundle\RemoteApi\RemotePaymentProcessor;
+use AppBundle\RemoteApi\RemotePaymentUrlSource;
+use AppBundle\RemoteApi\RemotePaymentUrlSourceInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -18,14 +20,14 @@ class RemotePaymentProcessorTest extends TestCase
     private $client;
 
     /**
-     * @var string
-     */
-    private $paymentApiUrl;
-
-    /**
      * @var RemotePaymentProcessor
      */
     private $processor;
+
+    /**
+     * @var RemotePaymentUrlSourceInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $urlSource;
 
     /**
      * PHPUnit: setUp.
@@ -33,9 +35,9 @@ class RemotePaymentProcessorTest extends TestCase
     public function setUp()
     {
         $this->client = $this->createClientInterfaceMock();
-        $this->paymentApiUrl = 'http://localhost/remote-payments/pay/';
+        $this->urlSource = $this->createRemotePaymentUrlSourceMock();
 
-        $this->processor = new RemotePaymentProcessor($this->client, $this->paymentApiUrl);
+        $this->processor = new RemotePaymentProcessor($this->client, $this->urlSource);
     }
 
     /**
@@ -44,7 +46,7 @@ class RemotePaymentProcessorTest extends TestCase
     public function tearDown()
     {
         $this->processor = null;
-        $this->paymentApiUrl = null;
+        $this->urlSource = null;
         $this->client = null;
     }
 
@@ -53,10 +55,12 @@ class RemotePaymentProcessorTest extends TestCase
         $this->expectException(UnexpectedResponseStatusException::class);
 
         $payment = $this->generateExamplePayment();
+        $apiUrl = 'http://localhost/payment/api/';
 
         $prepResponse = new Response(500);
 
-        $this->setUpClientRequest($payment, $prepResponse);
+        $this->setUpClientRequest($payment, $apiUrl, $prepResponse);
+        $this->setUpUrlSourceGetUrl($apiUrl);
 
         $this->processor->sendPaymentRequest($payment);
     }
@@ -71,10 +75,12 @@ class RemotePaymentProcessorTest extends TestCase
         $this->expectException(InvalidResponseException::class);
 
         $payment = $this->generateExamplePayment();
+        $apiUrl = 'http://localhost/payment/api/';
 
         $prepResponse = new Response(200, [], $responseBody);
 
-        $this->setUpClientRequest($payment, $prepResponse);
+        $this->setUpClientRequest($payment, $apiUrl, $prepResponse);
+        $this->setUpUrlSourceGetUrl($apiUrl);
 
         $this->processor->sendPaymentRequest($payment);
     }
@@ -107,10 +113,12 @@ class RemotePaymentProcessorTest extends TestCase
     public function testSendPaymentRequestSuccess(array $responseData)
     {
         $payment = $this->generateExamplePayment();
+        $apiUrl = 'http://localhost/payment/api/';
 
         $prepResponse = new Response(200, [], json_encode($responseData));
 
-        $this->setUpClientRequest($payment, $prepResponse);
+        $this->setUpClientRequest($payment, $apiUrl, $prepResponse);
+        $this->setUpUrlSourceGetUrl($apiUrl);
 
         $response = $this->processor->sendPaymentRequest($payment);
 
@@ -153,6 +161,16 @@ class RemotePaymentProcessorTest extends TestCase
     }
 
     /**
+     * Create mock for RemotePaymentUrlSource.
+     *
+     * @return RemotePaymentUrlSource|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createRemotePaymentUrlSourceMock()
+    {
+        return $this->getMockBuilder(RemotePaymentUrlSource::class)->getMock();
+    }
+
+    /**
      * Generate example payment.
      *
      * @return Payment
@@ -175,15 +193,16 @@ class RemotePaymentProcessorTest extends TestCase
      * Set up client: request.
      *
      * @param Payment  $payment
+     * @param string   $apiUrl
      * @param Response $response
      */
-    private function setUpClientRequest(Payment $payment, Response $response): void
+    private function setUpClientRequest(Payment $payment, string $apiUrl, Response $response): void
     {
         $this->client->expects($this->once())
             ->method('request')
             ->with(
                 $this->identicalTo('GET'),
-                $this->identicalTo($this->paymentApiUrl),
+                $this->identicalTo($apiUrl),
                 $this->identicalTo([
                     'json' => [
                         'Amount'           => $payment->getAmount(),
@@ -198,5 +217,18 @@ class RemotePaymentProcessorTest extends TestCase
                 ])
             )
             ->will($this->returnValue($response));
+    }
+
+    /**
+     * Set up URL source: getUrl.
+     *
+     * @param string $apiUrl
+     */
+    private function setUpUrlSourceGetUrl(string $apiUrl): void
+    {
+        $this->urlSource->expects($this->once())
+            ->method('getUrl')
+            ->with()
+            ->will($this->returnValue($apiUrl));
     }
 }

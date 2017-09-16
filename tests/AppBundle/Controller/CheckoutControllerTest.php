@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use AppBundle\RemoteApi\RemotePaymentUrlSourceInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -192,7 +193,7 @@ class CheckoutControllerTest extends WebTestCase
     }
 
     /**
-     * @param string   $apiUrl
+     * @param string   $urlSourceKey
      * @param array    $postValues
      * @param string   $expTitle
      * @param callable $crawlerAssertions
@@ -200,14 +201,15 @@ class CheckoutControllerTest extends WebTestCase
      * @dataProvider provideCheckoutPostData
      */
     public function testCheckoutPostActionSuccess(
-        string $apiUrl,
+        string $urlSourceKey,
         array $postValues,
         string $expTitle,
         callable $crawlerAssertions
     ) {
-        putenv(sprintf('REMOTE_API_PAYMENT_URL=%s', $apiUrl));
-
         $client = self::createClient();
+
+        $urlSource = $client->getContainer()->get(RemotePaymentUrlSourceInterface::class);
+        $urlSource->setUrl($urlSourceKey);
 
         $crawler = $client->request('POST', '/checkout', $postValues);
 
@@ -215,8 +217,6 @@ class CheckoutControllerTest extends WebTestCase
         $this->assertSame($expTitle, $crawler->filter('#container h1')->text());
 
         $crawlerAssertions($crawler);
-
-        putenv('REMOTE_API_PAYMENT_URL');
     }
 
     /**
@@ -228,14 +228,14 @@ class CheckoutControllerTest extends WebTestCase
     {
         return [
             'invalid JSON' => [
-                'https://pastebin.com/raw/LrCS4j0c',
+                'dev.invalidjs',
                 $this->getValidInputDataSet(),
                 'Checkout Error',
                 function () {
                 },
             ],
             'result = OK' => [
-                'https://pastebin.com/raw/288PX9T6',
+                'dev.ok',
                 $this->getValidInputDataSet(),
                 'Checkout Successful',
                 function (Crawler $crawler) {
@@ -246,7 +246,7 @@ class CheckoutControllerTest extends WebTestCase
                 },
             ],
             'result = DECLINE' => [
-                'https://pastebin.com/raw/1fpTv46q',
+                'dev.decline.amount_exceeded',
                 $this->getValidInputDataSet(),
                 'Checkout Error',
                 function (Crawler $crawler) {

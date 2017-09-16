@@ -15,20 +15,20 @@ class RemotePaymentProcessor implements RemotePaymentProcessorInterface
     private $client;
 
     /**
-     * @var string
+     * @var RemotePaymentUrlSourceInterface
      */
-    private $paymentApiUrl;
+    private $urlSource;
 
     /**
      * Constructor.
      *
-     * @param ClientInterface $client
-     * @param string          $paymentApiUrl
+     * @param ClientInterface                 $client
+     * @param RemotePaymentUrlSourceInterface $urlSource
      */
-    public function __construct(ClientInterface $client, string $paymentApiUrl)
+    public function __construct(ClientInterface $client, RemotePaymentUrlSourceInterface $urlSource)
     {
         $this->client = $client;
-        $this->paymentApiUrl = $paymentApiUrl;
+        $this->urlSource = $urlSource;
     }
 
     /**
@@ -38,7 +38,7 @@ class RemotePaymentProcessor implements RemotePaymentProcessorInterface
     {
         $response = $this->client->request(
             'GET',
-            $this->paymentApiUrl,
+            $this->urlSource->getUrl(),
             [
                 'json' => [
                     'Amount'           => $payment->getAmount(),
