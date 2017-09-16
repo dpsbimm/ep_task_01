@@ -10,12 +10,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
     /**
      * @Route("/checkout", name="checkout_get")
      * @Method({"GET"})
+     *
+     * @return Response
      */
     public function checkoutGetAction()
     {
@@ -25,6 +28,11 @@ class CheckoutController extends Controller
     /**
      * @Route("/checkout", name="checkout_post")
      * @Method({"POST"})
+     *
+     * @param Request                         $request
+     * @param RemotePaymentProcessorInterface $remotePaymentProcessor
+     *
+     * @return Response
      */
     public function checkoutPostAction(Request $request, RemotePaymentProcessorInterface $remotePaymentProcessor)
     {
